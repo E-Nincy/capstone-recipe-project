@@ -29,11 +29,17 @@
 
 ## Project Structure
 recipe_generator/
+
 ├── cli.py # CLI interface logic
+
 ├── models.py # Ingredient and Recipe classes
+
 ├── database.py # Database setup and CRUD functions
+
 ├── utils.py # Web search and helper functions
+
 ├── main.py # Entry point
+
 └── README.md # Project documentation
 
 
