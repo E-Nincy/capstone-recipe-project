@@ -1,47 +1,43 @@
 # command-line interface logic
 
-from database import add_ingredient, get_ingredients, delete_ingredient
+import click
+from rich.console import Console
+from rich.table import Table
+
+from models import Ingredient
 from utils import search_recipe_online
 
+console = Console()
 
+
+@click.group()
 def run_cli():
-    while True:
-        print("Recipe Generator Menu")
-        print("1. Add an ingredient")
-        print("2. Search recipes online")
-        print("3. View saved ingredients")
-        print("4. Delete an ingredient")
-        print("5. Exit")
+    """ Welcome to the Recipe Generator CLI"""
+    console.print("[bold green] Welcome to the Recipe Generator![/bold green]")
 
-        choice = input("Choose an option (1-5): ")
 
-        if choice == "1":
-            name = input("Enter ingredient name: ")
-            amount = input("Enter amount (e.g. '2 cups'): ")
-            add_ingredient(name, amount)
-            print(f"Ingredient '{name}' added.")
+@run_cli.command()
+@click.option("--ingredient", prompt="Enter an ingredient", help="Name of the ingredient")
+def search(ingredient):
+    """Search for recipes online using an ingredient"""
+    ing = Ingredient(ingredient, 1)
+    console.print(
+        f"[cyan]Searching for recipes with [bold]{ingredient}[/bold]...[/cyan]")
+    search_recipe_online(ingredient)
 
-        elif choice == "2":
-            name = input("Enter ingredient to search recipes for: ")
-            search_recipe_online(name)
 
-        elif choice == "3":
-            ingredients = get_ingredients()
-            if ingredients:
-                print("Saved Ingredients:")
-                for name, amount in ingredients:
-                    print(f"- {name}: {amount}")
-            else:
-                print("No ingredients saved.")
+@run_cli.command()
+def info():
+    """Show information about the project"""
+    table = Table(title="Recipe Generator Info")
 
-        elif choice == "4":
-            name = input("Enter the name of the ingredient to delete: ")
-            delete_ingredient(name)
-            print(f"Ingredient '{name}' deleted (if it existed).")
+    table.add_column("Feauture", style="magenta", no_wrap=True)
+    table.add_column("Description", style="green")
 
-        elif choice == "5":
-            print("Goodbye!")
-            break
+    table.add_row("Search Recipes",
+                  "Searches Google for recipes with a chosen ingredient.")
+    table.add_row("Interactive CLI", "Built using Click and styled with Rich.")
+    table.add_row("Modular Code", "Organized into separate files for clarity.")
+    table.add_row("Database Ready", "Prepared to store and retrieve recipes.")
 
-        else:
-            print("Invalid option. Please choose a number between 1 and 5.")
+    console.print(table)
