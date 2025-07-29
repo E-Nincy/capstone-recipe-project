@@ -12,7 +12,7 @@
 - Object-Oriented structure using classes (`Ingredient`, `Recipe`)
 - SQLite database for storing ingredients
 - Web search for recipes via `webbrowser`
-- Simple CLI interface (optionally extendable using `click` or `rich`)
+- Simple CLI interface using `click` and `rich`
 - Easy-to-extend modular project structure
 - Exception handling (planned)
 - Bonus: file I/O, decorators, and custom data analysis (optional)
@@ -23,7 +23,7 @@
 
 - Python 3.x
 - Standard libraries: `sqlite3`, `webbrowser`, `urllib.parse`
-- Optional packages: `click`, `rich`, `requests`
+- External libraries: `click` (command-line interface), `rich` (pretty printing in terminal), `requests` (handling HTTP calls)
 
 ---
 
